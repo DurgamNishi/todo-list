@@ -16,7 +16,7 @@ const App = () => {
 
   return (
     <div className="bg">
-      <h1>ToDO</h1>
+      <h1 className="heading">ToDO</h1>
       <div>
         <input type="text" value={value} onChange={onChange} />
         <button onClick={onAddTodo}>Add</button>
