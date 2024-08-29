@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
 
-function App() {
+const App = () => {
+  const [value, setValue] = useState("");
+  const [todos, setTodos] = useState([]);
+
+  const onChange = (e) => {
+    setValue(e.target.value);
+  };
+
+  const onAddTodo = () => {
+    setTodos((prevstate) => [...prevstate, value]);
+
+    setValue("");
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="bg">
+      <h1>ToDO</h1>
+      <div>
+        <input type="text" value={value} onChange={onChange} />
+        <button onClick={onAddTodo}>Add</button>
+      </div>
+      <div>
+        <ul style={{ listStyleType: "none" }}>
+          {todos.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
