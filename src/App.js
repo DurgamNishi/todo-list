@@ -1,8 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 const App = () => {
   const [value, setValue] = useState("");
   const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    const todosId = localStorage.getItem("todosId");
+    if (todosId) {
+      const stringifiedSavedToDO = localStorage.getItem(todosId);
+      const savedTodos = JSON.parse(stringifiedSavedToDO);
+      if (savedTodos) setTodos(savedTodos);
+    }
+  }, []);
 
   const onChange = (e) => {
     setValue(e.target.value);
@@ -19,7 +29,14 @@ const App = () => {
   };
 
   const onClickClear = () => {
-    setTodos(" ");
+    setTodos([]);
+  };
+
+  const onClickSave = () => {
+    const stringifiedTodos = JSON.stringify(todos);
+    const todosId = uuidv4();
+    localStorage.setItem("todosId", todosId);
+    localStorage.setItem(todosId, stringifiedTodos);
   };
 
   return (
@@ -135,6 +152,7 @@ const App = () => {
               fontSize: "20px",
               fontWeight: "bold",
             }}
+            onClick={onClickSave}
           >
             save
           </button>
